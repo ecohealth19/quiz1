@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>كويز خاص بالدرس الأول والثاني</title>
+  <style>
+    :root{
+      --bg1:#0f172a;
+      --bg2:#1e293b;
+      --card:#ffffff;
+      --accent:#2563eb;
+      --accent2:#0ea5e9;
+      --ok:#16a34a;
+      --bad:#dc2626;
+      --muted:#64748b;
+      --border:#e2e8f0;
+      --warn:#f59e0b;
+    }
+
+    *{
+      box-sizing:border-box;
+      font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+    }
+
+    body{
+      margin:0;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      min-height:100vh;
+      color:#0f172a;
+    }
+
+    .wrap{
+      max-width:1000px;
+      margin:0 auto;
+      padding:28px 16px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:24px;
+      box-shadow:0 20px 50px rgba(0,0,0,.25);
+      padding:28px;
+      border:1px solid rgba(255,255,255,.2);
+    }
+
+    .hero{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .hero-image{
+      display:block;
+      margin:12px auto;
+      max-width:120px;
+      width:50%;
+      height:auto;
+      border-radius:16px;
+    }
+
+    .title{
+      font-size:28px;
+      font-weight:800;
+      color:#0f172a;
+      margin:0;
+      width:100%;
+      text-align:center;
+    }
+
+    .sub{
+      color:var(--muted);
+      line-height:1.8;
+      text-align:center;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    label{
+      font-weight:700;
+      color:#1e293b;
+    }
+
+    input{
+      padding:14px 16px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      font-size:16px;
+      outline:none;
+    }
+
+    input:focus{
+      border-color:var(--accent2);
+      box-shadow:0 0 0 4px rgba(14,165,233,.12);
+    }
+
+    .btns{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:22px;
+    }
+
+    button{
+      border:none;
+      border-radius:14px;
+      padding:14px 20px;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff;
+    }
+
+    .secondary{
+      background:#eef2ff;
+      color:#3730a3;
+    }
+
+    .ghost{
+      background:#f8fafc;
+      color:#334155;
+      border:1px solid var(--border);
+    }
+
+    button:hover{
+      transform:translateY(-1px);
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .progressBox{
+      background:#eff6ff;
+      padding:10px 14px;
+      border-radius:16px;
+      color:#1d4ed8;
+      font-weight:700;
+    }
+
+    .timer{
+      background:#f8fafc;
+      border:1px solid var(--border);
+      padding:10px 14px;
+      border-radius:16px;
+      color:#334155;
+      font-weight:700;
+    }
+
+    .question{
+      font-size:24px;
+      font-weight:800;
+      line-height:1.8;
+      margin:14px 0 22px;
+      color:#0f172a;
+    }
+
+    .options{
+      display:grid;
+      gap:12px;
+    }
+
+    .option{
+      border:1px solid var(--border);
+      padding:16px 18px;
+      border-radius:16px;
+      background:#fff;
+      cursor:pointer;
+      transition:.18s;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+    }
+
+    .option:hover{
+      border-color:#93c5fd;
+      background:#f8fbff;
+    }
+
+    .option.selected{
+      border-color:var(--accent);
+      background:#eff6ff;
+    }
+
+    .option span.key{
+      background:#dbeafe;
+      color:#1d4ed8;
+      min-width:34px;
+      height:34px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:10px;
+      font-weight:800;
+    }
+
+    .meta{
+      color:var(--muted);
+      line-height:1.8;
+      background:#f8fafc;
+      border:1px dashed var(--border);
+      padding:14px;
+      border-radius:14px;
+      margin-top:18px;
+    }
+
+    .resultBox{
+      display:grid;
+      gap:16px;
+    }
+
+    .score{
+      font-size:30px;
+      font-weight:900;
+      color:#0f172a;
+    }
+
+    .score span{
+      color:#2563eb;
+    }
+
+    .small{
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .footerNote{
+      margin:18px auto 0;
+      text-align:center;
+      max-width:700px;
+      color:#475569;
+      line-height:1.9;
+      background:#f8fafc;
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .instructionsBox{
+      background:#f8fafc;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:20px;
+      margin:20px 0;
+    }
+
+    .instructionsBox h3{
+      margin-top:0;
+      margin-bottom:14px;
+      color:#0f172a;
+      font-size:22px;
+    }
+
+    .instructionsBox p{
+      margin:8px 0 14px;
+      line-height:1.9;
+      color:#334155;
+    }
+
+    .instructionsList{
+      margin:0;
+      padding-right:20px;
+      line-height:2;
+      color:#1e293b;
+      font-weight:600;
+    }
+
+    .instructionsList li{
+      margin-bottom:8px;
+    }
+
+    .lessonBox{
+      margin-top:20px;
+      padding:18px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:#ffffff;
+    }
+
+    .lessonTitle{
+      font-size:20px;
+      font-weight:800;
+      margin-bottom:14px;
+      color:#0f172a;
+    }
+
+    .lessonGroupTitle{
+      font-size:24px;
+      font-weight:800;
+      color:#0f172a;
+      margin-bottom:16px;
+      text-align:center;
+    }
+
+    .videoCard{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      flex-wrap:wrap;
+      background:#f8fafc;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      margin-top:14px;
+    }
+
+    .videoThumb{
+      width:220px;
+      max-width:100%;
+      border-radius:14px;
+      border:1px solid var(--border);
+      object-fit:cover;
+      min-height:120px;
+      background:#fff;
+    }
+
+    .videoInfo{
+      flex:1;
+      min-width:240px;
+    }
+
+    .checks{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .checkItem{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      background:#f8fafc;
+      border:1px solid var(--border);
+      padding:14px;
+      border-radius:14px;
+      line-height:1.8;
+    }
+
+    .checkItem input[type="checkbox"]{
+      margin-top:4px;
+      transform:scale(1.15);
+      accent-color:#2563eb;
+    }
+
+    .warningBox{
+      background:#fff7ed;
+      border:1px solid #fdba74;
+      color:#9a3412;
+      padding:14px;
+      border-radius:14px;
+      margin-top:18px;
+      line-height:1.8;
+      font-weight:600;
+    }
+
+    .lessonBlock{
+      margin-bottom:18px;
+    }
+
+    .lessonBlock:last-child{
+      margin-bottom:0;
+    }
+
+    @media (max-width:700px){
+      .grid{grid-template-columns:1fr}
+      .title{font-size:23px}
+      .question{font-size:21px}
+      .videoCard{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- الصفحة الأولى: التوجيهات -->
+    <section id="startScreen" class="card">
+      <div class="hero">
+        <h1 class="title">كويز </h1>
+        <h1 class="title">تهيئة بيئة العمل وتصحيح الأحطاء</h1>
+        <img src="python.jpeg" alt="Python Quiz" class="hero-image">
+        <div class="sub">يرجى قراءة التوجيهات بعناية قبل الانتقال إلى الإجابة عن الأسئلة.</div>
+      </div>
+
+      <div class="instructionsBox">
+        <h3>توجيهات مهمة قبل البدء</h3>
+        <p>
+          يهدف هذا الكويز إلى التأكد من مدى استيعاب الطالب لمحتوى الدروس، وقياس فهمه للنقاط الأساسية بطريقة منظمة وواضحة.
+        </p>
+
+        <ol class="instructionsList">
+          <li>من الضروري الإجابة عن <strong>جميع الأسئلة</strong> دون ترك أي سؤال فارغ.</li>
+          <li>تؤخذ الإجابة عن هذا الكويز بعين الاعتبار ضمن <strong>التقييم المستمر للأعمال التطبيقية TP</strong>.</li>
+          <li>
+            يمكنك الاطلاع على علامتك من خلال الرابط التالي:
+            <br>
+            <a id="gradesLink" href="https://example.com/grades" target="_blank">اضغط هنا للاطلاع على العلامة</a>
+          </li>
+        </ol>
+
+        <div class="warningBox">
+          لن تتمكن من بدء الكويز إلا بعد إدخال معلوماتك الشخصية والتأكيد أنك راجعت جميع الدروس واطلعت على جميع فيديوهات الشرح.
+        </div>
+      </div>
+
+      <div class="lessonBox">
+        <div class="lessonGroupTitle">الدروس المعنية بالكويز</div>
+        <div id="lessonsContainer"></div>
+        <div class="checks">
+        <label class="checkItem">
+        <input type="checkbox" id="confirmAllLessons">
+        <span>أؤكد أنني اطلعت على الدروس والفيديوهات.</span>
+        </label>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="firstName">الاسم</label>
+          <input id="firstName" type="text" placeholder="أدخل الاسم" />
+        </div>
+
+        <div class="field">
+          <label for="lastName">اللقب</label>
+          <input id="lastName" type="text" placeholder="أدخل اللقب" />
+        </div>
+
+        <div class="field" style="grid-column:1/-1">
+          <label for="studentId">رقم التسجيل</label>
+          <input id="studentId" type="text" placeholder="أدخل رقم التسجيل" />
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="primary" onclick="startQuiz()">بدأ الكويز</button>
+      </div>
+
+      <div class="footerNote">
+        تم إعداد هذا الكويز من قبل الأستاذ زيات عادل
+      </div>
+    </section>
+
+    <!-- شاشة الكويز -->
+    <section id="quizScreen" class="card hidden">
+      <div class="topbar">
+        <div class="progressBox" id="progressText">السؤال 1 / 20</div>
+        <div class="timer" id="timer">الوقت: 00:00</div>
+      </div>
+
+      <div class="small" id="studentInfo"></div>
+      <div class="question" id="questionText"></div>
+      <div class="options" id="optionsContainer"></div>
+
+      <div class="meta">
+        اختر إجابة واحدة صحيحة لكل سؤال، ثم انتقل إلى السؤال التالي.
+      </div>
+
+      <div class="btns">
+        <button class="ghost" onclick="prevQuestion()">السابق</button>
+        <button class="primary" onclick="nextQuestion()">التالي</button>
+        <button class="secondary hidden" id="finishBtn" onclick="finishQuiz()">إنهاء الكويز</button>
+      </div>
+    </section>
+
+    <!-- شاشة النتائج -->
+    <section id="resultScreen" class="card hidden">
+      <h2 class="title">النتيجة النهائية</h2>
+      <div class="resultBox">
+        <div class="score" id="scoreText"></div>
+        <div class="small" id="resultStudentInfo"></div>
+        <div class="btns">
+          <button class="primary" disabled>تم إنهاء الكويز</button>
+        </div>
+        <div id="sendStatus" class="footerNote">لم يتم الإرسال بعد.</div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // =========================
+    // إعدادات الدروس
+    // أضف درسًا أو احذف درسًا من هنا فقط
+    // =========================
+    const lessons = [
+      {
+        title: "الدرس الأول: تهيئة بيئة العمل لبايثون",
+        videoUrl: "https://www.youtube.com/watch?v=f-WYk4dvVyU&t=166s",
+        imageUrl: "cours 1.jpg"
+      },
+      {
+        title: "الدرس الثاني: كتابة أول سطر برمجي وتصحيح الأخطاء",
+        videoUrl: "https://www.youtube.com/watch?v=hnA2NoOeIFg",
+        imageUrl: "cours 2.jpg"
+      }
+      // يمكن إضافة درس ثالث بهذا الشكل:
+      // ,
+      // {
+      //   title: "الدرس الثالث: المتغيرات والعمليات الحسابية",
+      //   videoUrl: "https://example.com/lesson-video-3",
+      //   imageUrl: "video-thumbnail-3.jpg"
+      // }
+    ];
+
+    const QUIZ_TITLE = "كويز ";
+    const GRADES_URL = "https://example.com/grades";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIfGIyZwB1cgpJb-O3aRONH9fz0bvQvW2Eqqhs8WQdjHnXZvakEpLzfyWJ_uHUwISD/exec";
+
+    const questions = [
+  {
+    q: "طالب ثبّت Python من موقع غير رسمي، وبعد أيام ظهرت لديه مشكلات عند تشغيل بعض المكتبات. ما التفسير الأقرب وفق الدرس؟",
+    options: [
+      "لأن Python لا تعمل إلا على Google Colab",
+      "لأن النسخة قد تكون غير محدثة أو معدلة",
+      "لأن Visual Studio Code يرفض كل النسخ الحديثة",
+      "لأن أوامر Python لا تعمل إلا داخل المتصفح"
+    ],
+    answer: 1
+  },
+  {
+    q: "إذا كتب الطالب الأمر python --version ولم يظهر رقم الإصدار، بل ظهرت رسالة أن python غير معروف، فما السبب الأكثر احتمالًا؟",
+    options: [
+      "الطالب استعمل متصفحًا قديمًا",
+      "لم يفعّل Add Python to PATH أثناء التثبيت",
+      "نسي تثبيت Visual Studio Code",
+      "استعمل علامات اقتباس خاطئة"
+    ],
+    answer: 1
+  },
+  {
+    q: "أي موقف يعبّر بدقة عن الفرق بين المفسر التفاعلي وملف Python عادي؟",
+    options: [
+      "المفسر التفاعلي لتجريب أوامر مباشرة، والملف البرمجي لحفظ برنامج كامل وتشغيله لاحقًا",
+      "المفسر التفاعلي لا ينفذ الأوامر إطلاقًا",
+      "الملف البرمجي لا يمكن تشغيله إلا من Google Colab",
+      "لا يوجد أي فرق بينهما"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي اختيار هو الأنسب لطالب يريد البدء فورًا دون تثبيت Python محليًا على جهازه؟",
+    options: [
+      "Google Colab",
+      "CMD فقط",
+      "دفتر ملاحظات ويندوز",
+      "آلة حاسبة النظام"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي عبارة أدق بخصوص Visual Studio Code كما ورد في الدرس؟",
+    options: [
+      "هو لغة برمجة جديدة بديلة عن Python",
+      "هو محرر أكواد يساعد على كتابة البرامج وتشغيلها",
+      "هو موقع لتحميل الصور التعليمية",
+      "هو أداة مخصصة فقط لتحليل البيانات"
+    ],
+    answer: 1
+  },
+  {
+    q: "إذا أراد الطالب الوصول إلى Python من خلال سطر الأوامر من أي مجلد في الجهاز، فما الإعداد الذي يجعل ذلك ممكنًا؟",
+    options: [
+      "تغيير اسم الملف إلى main.py",
+      "تفعيل Add Python to PATH",
+      "كتابة البرنامج بحروف كبيرة",
+      "استعمال Google Drive"
+    ],
+    answer: 1
+  },
+  {
+    q: "أي من التالي يمثل ميزة تعليمية مهمة في Google Colab؟",
+    options: [
+      "إمكانية الجمع بين الشرح النظري والكود والنتائج في نفس الدفتر",
+      "منع مشاركة الملفات مع الآخرين",
+      "إلغاء الحاجة إلى الإنترنت نهائيًا",
+      "عدم حفظ الملفات تلقائيًا"
+    ],
+    answer: 0
+  },
+  {
+    q: "إذا أراد الطالب حفظ ملفاته والوصول إليها من أي جهاز عند استخدام Google Colab، فأين تحفظ عادة؟",
+    options: [
+      "في Google Drive",
+      "في BIOS",
+      "داخل الطابعة",
+      "في ذاكرة مؤقتة لا يمكن استرجاعها"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي مثال يعبّر عن أول برنامج صحيح كما ورد في الدرس الثاني؟",
+    options: [
+      "print('Hello, World!')",
+      "echo('Hello, World!')",
+      "show('Hello, World!')",
+      "printf('Hello, World!')"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي تفسير هو الأدق لعبارة print(\"Hello, World!\")؟",
+    options: [
+      "تعليمة لحذف النص من الذاكرة",
+      "استدعاء دالة لطباعة سلسلة نصية على المخرجات",
+      "تعريف دالة جديدة باسم Hello",
+      "إنشاء قائمة من الحروف"
+    ],
+    answer: 1
+  },
+  {
+    q: "عند تنفيذ البرنامج: y = 5 ثم z = 7 ثم x = y + z ثم print(x)، ما الذي يحدث أولًا؟",
+    options: [
+      "تتم طباعة 12 أولًا ثم تعريف المتغيرات",
+      "تُنفذ أوامر الإسناد سطرًا سطرًا ثم تُطبع النتيجة",
+      "يتوقف التنفيذ لأن x غير معرّف",
+      "تُحوَّل الأعداد إلى نصوص تلقائيًا"
+    ],
+    answer: 1
+  },
+  {
+    q: "أي عبارة تصف Indentation في Python بدقة أكبر؟",
+    options: [
+      "عنصر شكلي لتحسين مظهر الكود فقط",
+      "جزء بنيوي يحدد كتلة الأوامر التابعة لتراكيب مثل if و for و while و def",
+      "بديل عن الأقواس المستديرة فقط",
+      "طريقة لكتابة التعليقات"
+    ],
+    answer: 1
+  },
+  {
+    q: "لماذا يعد الخلط غير الثابت بين المسافات وTab في بداية الأسطر مشكلة في Python؟",
+    options: [
+      "لأنه قد يفسد بنية الكتل ويؤدي إلى أخطاء في المسافات البادئة",
+      "لأنه يمنع استخدام المتغيرات العددية",
+      "لأنه يحوّل الكود إلى تعليقات",
+      "لأنه يمنع استعمال print"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي سطر من التالي يمثل تعليقًا صحيحًا لا يُنفذ؟",
+    options: [
+      "# هذا تعليق",
+      "// هذا تعليق",
+      "<!-- هذا تعليق -->",
+      "** هذا تعليق **"
+    ],
+    answer: 0
+  },
+  {
+    q: "إذا كتب الطالب print = 7 ثم حاول لاحقًا استعمال print(\"Hello\")، فما الفكرة المفاهيمية الأقرب للمشكلة؟",
+    options: [
+      "استعمل اسمًا له دور برمجي مهم بشكل قد يسبب سلوكًا غير مرغوب",
+      "Python لا تسمح باستعمال الأعداد الصحيحة",
+      "التعليقات لا تعمل داخل Visual Studio Code",
+      "المفسر التفاعلي لا يقبل النصوص"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي حالة توضّح حساسية Python لحالة الأحرف؟",
+    options: [
+      "x و X يُعدّان اسمين مختلفين",
+      "x و X متطابقان دائمًا",
+      "Python تحوّل كل الأسماء تلقائيًا إلى حروف صغيرة",
+      "Python لا تستعمل الحروف في أسماء المتغيرات"
+    ],
+    answer: 0
+  },
+  {
+    q: "ما السبب الحقيقي لوقوع الخطأ في المثال x = 5 ثم print(X)؟",
+    options: [
+      "لأن X متغير مختلف عن x بسبب حساسية حالة الأحرف",
+      "لأن العدد 5 لا يمكن طباعته",
+      "لأن print لا تعمل مع المتغيرات",
+      "لأن Python تتطلب فاصلة منقوطة"
+    ],
+    answer: 0
+  },
+  {
+    q: "في المثال y = 5 و z = \"7\" ثم print(y + z)، لماذا يظهر TypeError؟",
+    options: [
+      "لأن Python لا تدعم الطباعة",
+      "لأن هناك محاولة للجمع بين عدد صحيح وسلسلة نصية دون تحويل مناسب",
+      "لأن المتغير y غير معرّف",
+      "لأن السطر يجب أن ينتهي بفاصلة منقوطة"
+    ],
+    answer: 1
+  },
+  {
+    q: "إذا كان الهدف من المثال السابق هو الحصول على ناتج عددي 12، فما التصحيح الأنسب؟",
+    options: [
+      "print(y + int(z))",
+      "print(str(y) + z)",
+      "print(y, z)",
+      "z = [7]"
+    ],
+    answer: 0
+  },
+  {
+    q: "إذا استُعمل التصحيح print(str(y) + z) بدل print(y + int(z))، فما الناتج المتوقع؟",
+    options: [
+      "12 كعدد صحيح",
+      "57 كنص ناتج عن الربط",
+      "خطأ SyntaxError",
+      "لا شيء"
+    ],
+    answer: 1
+  },
+  {
+    q: "في المثال x = \"k\" ثم x = int(x)، لماذا يصنف الخطأ على أنه ValueError؟",
+    options: [
+      "لأن اسم المتغير غير صالح",
+      "لأن القيمة النصية نفسها لا تصلح للتحويل إلى عدد صحيح",
+      "لأن Python لا تدعم int",
+      "لأن المسافة البادئة غير صحيحة"
+    ],
+    answer: 1
+  },
+  {
+    q: "أي مثال من الآتي يمثّل خطأً تركيبيًا SyntaxError؟",
+    options: [
+      "print(\"Hello)",
+      "print(10 / 0)",
+      "x = \"k\"; int(x)",
+      "print(X) بعد تعريف x"
+    ],
+    answer: 0
+  },
+  {
+    q: "في المثال def show(): ثم في السطر التالي print(\"Hello\") دون إزاحة مناسبة، لماذا يحدث IndentationError؟",
+    options: [
+      "لأن Python تتطلب كتلة تابعة للدالة تكون مزاحة بشكل صحيح",
+      "لأن Hello كلمة محجوزة",
+      "لأن def لا تُستعمل مع print",
+      "لأن الأقواس يجب أن تكون مربعة"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي وصف أدق لـ NameError؟",
+    options: [
+      "خطأ ناتج عن استخدام اسم غير معرّف في السياق الحالي",
+      "خطأ ناتج عن القسمة على صفر",
+      "خطأ ناتج عن قيمة غير قابلة للتحويل",
+      "خطأ ناتج عن طلب عنصر خارج القائمة"
+    ],
+    answer: 0
+  },
+  {
+    q: "ماذا يمكن أن نستنتج مباشرة من رسالة الخطأ في Python وفق الدرس؟",
+    options: [
+      "نوع الخطأ، رقم السطر، ووصفًا مختصرًا",
+      "اسم المعلم فقط",
+      "اسم الحاسوب المستعمل",
+      "نوع نظام التشغيل فقط"
+    ],
+    answer: 0
+  },
+  {
+    q: "لماذا تُعدّ قاعدة تعديل عنصر واحد فقط ثم إعادة التشغيل قاعدة مهمة أثناء التصحيح؟",
+    options: [
+      "لأنها تسمح بمعرفة السبب الحقيقي للتعديل الذي أصلح الخطأ",
+      "لأن Python لا تسمح بأكثر من تعديل",
+      "لأنها تقلل حجم الملف فقط",
+      "لأنها تمنع حفظ البرنامج"
+    ],
+    answer: 0
+  },
+  {
+    q: "إذا عدّل الطالب عدة أسطر في الوقت نفسه ثم اختفى الخطأ، فما المشكلة المنهجية هنا؟",
+    options: [
+      "لن يعرف بالضبط أي تعديل كان السبب في حل المشكلة",
+      "سيحصل دائمًا على ZeroDivisionError",
+      "سيمنع ذلك تنفيذ print",
+      "ستتحول المتغيرات إلى قوائم"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي تسلسل يمثّل المنهجية الصحيحة لتصحيح الأخطاء؟",
+    options: [
+      "تحديد نوع الخطأ ← الذهاب إلى السطر المذكور ← قراءة الوصف ← تعديل عنصر واحد ← إعادة التشغيل",
+      "إعادة تشغيل الحاسوب ← حذف الكود ← تغيير أسماء الملفات",
+      "تغيير كل المتغيرات إلى أعداد ← إعادة التثبيت",
+      "فتح المتصفح ← تغيير اللغة ← إعادة الطباعة"
+    ],
+    answer: 0
+  },
+  {
+    q: "إذا ظهر ZeroDivisionError في السطر print(10 / 0)، فما السبب المباشر؟",
+    options: [
+      "وجود قسمة على صفر",
+      "وجود اسم غير معرّف",
+      "وجود سلسلة نصية غير مغلقة",
+      "وجود خطأ في المسافة البادئة"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي موقف يعبّر عن IndexError؟",
+    options: [
+      "محاولة الوصول إلى عنصر خارج حدود القائمة",
+      "استعمال مفتاح غير موجود في قاموس",
+      "القسمة على صفر",
+      "كتابة تعليق بشكل غير صحيح"
+    ],
+    answer: 0
+  },
+  {
+    q: "وأي موقف يعبّر عن KeyError؟",
+    options: [
+      "محاولة الوصول إلى مفتاح غير موجود في قاموس",
+      "محاولة الوصول إلى عنصر خارج حدود القائمة",
+      "عدم غلق القوس",
+      "الخلط بين int و str"
+    ],
+    answer: 0
+  },
+  {
+    q: "طالب كتب برنامجًا صحيحًا في Google Colab ونجح، ثم أراد فتحه لاحقًا من جهاز آخر. ما الذي يجعل ذلك ممكنًا بحسب الدرس؟",
+    options: [
+      "أن الملفات تحفظ عادة على Google Drive",
+      "أن Colab يحفظ الملفات داخل شاشة الحاسوب",
+      "أن CMD ينقل الملفات تلقائيًا",
+      "أن Visual Studio Code يرسلها آليًا بالبريد"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي اختيار هو الأدق من حيث بيئة التعلم المناسبة: طالب يريد تجريب سريع لسطر أو سطرين فقط دون إنشاء ملف؟",
+    options: [
+      "المفسر التفاعلي",
+      "PowerPoint",
+      "Excel",
+      "مدير المهام"
+    ],
+    answer: 0
+  },
+  {
+    q: "أي اختيار هو الأدق من حيث بيئة التعلم المناسبة: طالب يريد كتابة برنامج منظم في ملفات، مع محرر مخصص وتشغيل متكرر؟",
+    options: [
+      "Visual Studio Code",
+      "شاشة القفل",
+      "الآلة الحاسبة",
+      "عارض الصور"
+    ],
+    answer: 0
+  },
+  {
+    q: "ما العلاقة الأدق بين الدرس الأول والدرس الثاني؟",
+    options: [
+      "الدرس الأول يهيئ البيئة والأدوات، والدرس الثاني يطبق الكتابة والتنفيذ وتشخيص الأخطاء داخل تلك البيئة",
+      "الدرسان متكرران تمامًا بلا فرق",
+      "الدرس الأول خاص بالرياضيات والدرس الثاني خاص بالصور",
+      "الدرس الثاني لا يحتاج أي بيئة عمل"
+    ],
+    answer: 0
+  }
+];
+
+    let currentIndex = 0;
+    let answers = new Array(questions.length).fill(null);
+    let student = {};
+    let startTime = null;
+    let timerInterval = null;
+    let elapsedSeconds = 0;
+
+    window.onload = function () {
+      document.title = QUIZ_TITLE;
+      document.querySelector('.title').textContent = QUIZ_TITLE;
+      document.getElementById('gradesLink').href = GRADES_URL;
+      renderLessonsAndChecks();
+    };
+
+    function renderLessonsAndChecks(){
+  const lessonsContainer = document.getElementById("lessonsContainer");
+  lessonsContainer.innerHTML = "";
+
+  lessons.forEach((lesson, index) => {
+    const lessonBlock = document.createElement("div");
+    lessonBlock.className = "lessonBlock";
+
+    lessonBlock.innerHTML = `
+      <div class="lessonTitle">${lesson.title}</div>
+      <div class="videoCard">
+        <img src="${lesson.imageUrl}" alt="صورة ${lesson.title}" class="videoThumb">
+        <div class="videoInfo">
+          <div style="font-weight:800; margin-bottom:8px;">فيديو شرح ${lesson.title}</div>
+          <div class="small" style="line-height:1.9; margin-bottom:10px;">
+            يرجى مشاهدة فيديو الشرح قبل البدء في الإجابة عن الكويز.
+          </div>
+          <a href="${lesson.videoUrl}" target="_blank">الانتقال إلى فيديو شرح ${lesson.title}</a>
+        </div>
+      </div>
+    `;
+
+    lessonsContainer.appendChild(lessonBlock);
+  });
+}
+
+    function startQuiz(){
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const studentId = document.getElementById('studentId').value.trim();
+
+      if(!firstName || !lastName || !studentId){
+        alert('يرجى ملء الاسم واللقب ورقم التسجيل أولاً.');
+        return;
+      }
+
+      const lessonChecks = [...document.querySelectorAll('.lesson-check')];
+      const videoChecks = [...document.querySelectorAll('.video-check')];
+
+      const allLessonsConfirmed = lessonChecks.every(c => c.checked);
+      const allVideosConfirmed = videoChecks.every(c => c.checked);
+
+      if(!allLessonsConfirmed){
+        alert('يرجى تأكيد أنك راجعت جميع الدروس أولاً.');
+        return;
+      }
+
+      if(!allVideosConfirmed){
+        alert('يرجى تأكيد أنك اطلعت على جميع فيديوهات الشرح.');
+        return;
+      }
+
+      student = {
+        firstName,
+        lastName,
+        studentId,
+        lessonConfirmations: lessonChecks.map(c => c.checked),
+        videoConfirmations: videoChecks.map(c => c.checked)
+      };
+
+      startTime = new Date();
+
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('quizScreen').classList.remove('hidden');
+      document.getElementById('studentInfo').textContent =
+        `الطالب: ${firstName} ${lastName} | رقم التسجيل: ${studentId}`;
+
+      startTimer();
+      renderQuestion();
+    }
+
+    function startTimer(){
+      timerInterval = setInterval(()=>{
+        elapsedSeconds++;
+        const m = String(Math.floor(elapsedSeconds/60)).padStart(2,'0');
+        const s = String(elapsedSeconds%60).padStart(2,'0');
+        document.getElementById('timer').textContent = `الوقت: ${m}:${s}`;
+      },1000);
+    }
+
+    function renderQuestion(){
+      const q = questions[currentIndex];
+      document.getElementById('progressText').textContent = `السؤال ${currentIndex+1} / ${questions.length}`;
+      document.getElementById('questionText').textContent = q.q;
+
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+
+      const keys = ['أ','ب','ج','د'];
+      q.options.forEach((opt, idx)=>{
+        const div = document.createElement('div');
+        div.className = 'option' + (answers[currentIndex]===idx ? ' selected' : '');
+        div.innerHTML = `<span class="key">${keys[idx]}</span><div>${opt}</div>`;
+        div.onclick = ()=>selectOption(idx);
+        container.appendChild(div);
+      });
+
+      document.getElementById('finishBtn').classList.toggle('hidden', currentIndex !== questions.length-1);
+    }
+
+    function selectOption(idx){
+      answers[currentIndex] = idx;
+      renderQuestion();
+    }
+
+    function nextQuestion(){
+      if(currentIndex < questions.length-1){
+        currentIndex++;
+        renderQuestion();
+      }
+    }
+
+    function prevQuestion(){
+      if(currentIndex > 0){
+        currentIndex--;
+        renderQuestion();
+      }
+    }
+
+    async function finishQuiz(){
+      const unanswered = answers.filter(a => a === null).length;
+      if (unanswered > 0) {
+        alert(`لا يمكن إنهاء الكويز. بقي ${unanswered} سؤال/أسئلة بدون إجابة.`);
+        return;
+      }
+
+      clearInterval(timerInterval);
+
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('resultScreen').classList.remove('hidden');
+
+      const score = answers.reduce((acc, ans, i) => acc + (ans === questions[i].answer ? 1 : 0), 0);
+      const percent = Math.round((score / questions.length) * 100);
+      const mention = getMention(score, questions.length);
+
+      document.getElementById('scoreText').innerHTML =
+        `العلامة: <span>${score}</span> / ${questions.length} (${percent}%)<br>درجة الاستحقاق: <span>${mention}</span>`;
+
+      document.getElementById('resultStudentInfo').textContent =
+        `الطالب: ${student.firstName} ${student.lastName} | رقم التسجيل: ${student.studentId} | المدة: ${formatTime(elapsedSeconds)}`;
+
+      const status = document.getElementById('sendStatus');
+      status.textContent = 'جاري تسجيل النتيجة في Google Sheet...';
+
+      try {
+        const payload = buildPayload();
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.status === 'success') {
+          status.textContent = 'تم تسجيل نتيجتك بنجاح في Google Sheet.';
+        } else if (data.status === 'duplicate') {
+          status.textContent = 'هذا اللقب أو رقم التسجيل مسجل مسبقًا، ولا يمكن إرسال محاولة أخرى.';
+        } else {
+          status.textContent = 'حدثت مشكلة أثناء التسجيل: ' + (data.message || 'خطأ غير معروف');
+        }
+      } catch (err) {
+        status.textContent = 'تعذر تسجيل النتيجة: ' + err.message;
+      }
+    }
+
+    function formatTime(total){
+      const m = String(Math.floor(total/60)).padStart(2,'0');
+      const s = String(total%60).padStart(2,'0');
+      return `${m}:${s}`;
+    }
+
+    function buildPayload(){
+      const score = answers.reduce((acc, ans, i)=> acc + (ans === questions[i].answer ? 1 : 0), 0);
+
+      return {
+        firstName: student.firstName,
+        lastName: student.lastName,
+        studentId: student.studentId,
+        quizTitle: QUIZ_TITLE,
+        lessons: lessons.map((lesson, index) => ({
+          title: lesson.title,
+          videoUrl: lesson.videoUrl,
+          lessonReviewed: student.lessonConfirmations[index] ? "نعم" : "لا",
+          videoReviewed: student.videoConfirmations[index] ? "نعم" : "لا"
+        })),
+        gradesUrl: GRADES_URL,
+        score: score,
+        total: questions.length,
+        percentage: Math.round((score / questions.length) * 100),
+        duration: formatTime(elapsedSeconds),
+        submittedAt: new Date().toISOString(),
+        answers: questions.map((q,i)=>({
+          question: q.q,
+          selected: answers[i] === null ? '' : q.options[answers[i]],
+          correct: q.options[q.answer],
+          isCorrect: answers[i] === q.answer
+        }))
+      };
+    }
+
+    function getMention(score, total){
+      const percent = Math.round((score / total) * 100);
+
+      if (percent >= 90) return "ممتاز";
+      if (percent >= 80) return "جيد جدًا";
+      if (percent >= 70) return "جيد";
+      if (percent >= 50) return "مقبول";
+      return "راسب";
+    }
+  </script>
+</body>
+</html>
